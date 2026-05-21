@@ -35,6 +35,13 @@
   background: var(--color-surface-muted);
 }
 
+/* When a colour picker menu is open inside a row, lift that row above its
+   absolutely-positioned siblings — otherwise later rows in DOM order paint
+   on top of the menu and clip it. */
+.entry-list__row:has(.color-picker__menu) {
+  z-index: 10;
+}
+
 .entry-list__name {
   flex: 1;
   min-width: 0;

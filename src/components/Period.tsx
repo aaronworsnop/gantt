@@ -129,9 +129,9 @@ export function Period({
         }}
         title="Drag to change start"
       />
-      <span className="period__label">
-        {span} {span === 1 ? "day" : "days"}
-      </span>
+      {/* Single-day periods are too narrow for any text, so leave the label
+          empty — the span still acts as the flex spacer between handles. */}
+      <span className="period__label">{span > 1 ? `${span} days` : ""}</span>
       <span
         className="period__handle period__handle--right"
         onPointerDown={(e) => {
