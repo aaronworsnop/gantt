@@ -1,14 +1,19 @@
 use crate::error::{AppError, AppResult};
+use directories::BaseDirs;
 use rusqlite::Connection;
 use std::fs;
 use std::path::PathBuf;
-use tauri::{AppHandle, Manager};
+use tauri::AppHandle;
 
-fn data_dir(app: &AppHandle) -> AppResult<PathBuf> {
-    let dir = app
-        .path()
-        .app_data_dir()
-        .map_err(|e| AppError::Other(format!("no app data dir: {e}")))?;
+/// Where the app stores its SQLite database. We deliberately do NOT use Tauri's
+/// `app_data_dir()` (which folders by bundle identifier, e.g.
+/// `%APPDATA%/com.foo.bar/`) — instead we use the conventional Windows
+/// `%APPDATA%/Gantt/` path so the folder has a clean human-readable name and is
+/// independent of whatever the bundle identifier happens to be.
+fn data_dir(_app: &AppHandle) -> AppResult<PathBuf> {
+    let base = BaseDirs::new()
+        .ok_or_else(|| AppError::Other("could not resolve base directories".into()))?;
+    let dir = base.data_dir().join("Gantt");
     fs::create_dir_all(&dir)?;
     Ok(dir)
 }
