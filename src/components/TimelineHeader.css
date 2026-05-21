@@ -1,0 +1,92 @@
+.timeline-header {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  grid-column: 2;
+  grid-row: 1;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  height: var(--header-height);
+}
+
+.timeline-header__months,
+.timeline-header__days {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.timeline-header__months {
+  top: 0;
+  height: var(--header-month-height);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.timeline-header__days {
+  top: var(--header-month-height);
+  bottom: 0;
+}
+
+.timeline-header__month {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  padding: 0 var(--space-3);
+  display: flex;
+  align-items: center;
+  border-left: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.timeline-header__day {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: var(--day-width);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  /* Vertical padding ensures the weekday letter / day number never touch
+     the top or bottom edge of the cell. */
+  padding: 0.375rem var(--space-1);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  border-left: 1px solid var(--color-border);
+}
+
+.timeline-header__day.is-weekend {
+  background: var(--color-weekend);
+}
+
+.timeline-header__weekday {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-subtle);
+  line-height: 1;
+}
+
+.timeline-header__daynum {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  line-height: 1;
+}
+
+.timeline-header__day.is-today .timeline-header__daynum {
+  background: var(--color-blueberry);
+  color: white;
+  width: 1.625rem;
+  height: 1.625rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  font-weight: var(--font-weight-semibold);
+}

@@ -1,0 +1,30 @@
+.gantt {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: var(--color-bg);
+}
+
+.gantt__scroll {
+  position: relative;
+  flex: 1;
+  display: grid;
+  grid-template-columns: var(--entry-list-width) calc(var(--total-days) * var(--day-width));
+  grid-template-rows: var(--header-height) minmax(
+      calc(var(--row-count) * var(--row-height)),
+      1fr
+    );
+  overflow: auto;
+}
+
+/* Top-left corner stays in both corners while scrolling */
+.gantt__corner {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}

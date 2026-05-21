@@ -1,0 +1,43 @@
+.timeline-body {
+  position: relative;
+  grid-column: 2;
+  grid-row: 2;
+  min-height: 100%;
+  background-color: var(--color-bg);
+
+  /* Two layered background patterns: weekend stripes + per-day vertical gridlines.
+     Sizes/positions all in em-derived custom properties. */
+  background-image:
+    linear-gradient(
+      to right,
+      var(--color-weekend) 0,
+      var(--color-weekend) calc(var(--day-width) * 2),
+      transparent calc(var(--day-width) * 2),
+      transparent calc(var(--day-width) * 7)
+    ),
+    linear-gradient(
+      to right,
+      var(--color-border) 0,
+      var(--color-border) 1px,
+      transparent 1px,
+      transparent var(--day-width)
+    );
+  background-size:
+    calc(var(--day-width) * 7) 100%,
+    var(--day-width) 100%;
+  background-position-x:
+    calc(var(--weekday-offset) * var(--day-width)),
+    0;
+  background-repeat: repeat-x, repeat-x;
+}
+
+.timeline-body__today-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-left: 0.125rem solid var(--color-blueberry);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.7;
+}

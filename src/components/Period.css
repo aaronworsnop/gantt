@@ -1,0 +1,146 @@
+.period {
+  position: absolute;
+  top: 50%;
+  height: var(--period-height);
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-1);
+  color: white;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  user-select: none;
+  /* No overflow:hidden here — children like the floating delete button
+     need to extend past the bar. The label has its own overflow control. */
+  z-index: 2;
+  /* Body is draggable; cursor switches to grabbing while a body-drag is live. */
+  cursor: grab;
+  transition:
+    left var(--duration-med) var(--ease-out),
+    width var(--duration-med) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    filter var(--duration-fast) var(--ease-out);
+  will-change: transform, width;
+}
+
+/* Any in-flight drag (left handle, right handle, or body) uses a fast width/left
+   transition so the bar smoothly tracks the pointer instead of snapping. */
+.period[data-dragging] {
+  transition:
+    left var(--duration-fast) var(--ease-out),
+    width var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+  box-shadow: var(--shadow-2);
+}
+
+.period[data-dragging="body"] {
+  cursor: grabbing;
+}
+
+.period:hover {
+  filter: brightness(1.05);
+  box-shadow: var(--shadow-2);
+}
+
+.period--ghost {
+  opacity: 0.55;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+.period__handle {
+  width: var(--period-handle-width);
+  height: 100%;
+  cursor: ew-resize;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.period__handle::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0.125rem;
+  height: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: var(--radius-pill);
+  transition: opacity var(--duration-fast) var(--ease-out);
+  opacity: 0;
+}
+
+.period__handle--left::before {
+  left: 0.1875rem;
+}
+
+.period__handle--right::before {
+  right: 0.1875rem;
+}
+
+.period:hover .period__handle::before {
+  opacity: 1;
+}
+
+.period__label {
+  flex: 1;
+  text-align: center;
+  padding: 0 var(--space-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+.period__delete {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.9375rem;
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  /* Solid border + drop shadow so the button stays visible against any
+     timeline background colour. */
+  border: 1px solid var(--color-border-strong);
+  box-shadow: var(--shadow-2);
+  opacity: 0;
+  z-index: 3;
+  transition: opacity var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.period__delete:hover {
+  transform: scale(1.1);
+}
+
+.period:hover .period__delete {
+  opacity: 1;
+}
+
+.period__delete:hover {
+  background: var(--color-tomato);
+  border-color: var(--color-tomato);
+  color: white;
+}
+
+/* ---- Colour variants ---- */
+.period--color-tomato    { background: var(--color-tomato); }
+.period--color-tangerine { background: var(--color-tangerine); }
+.period--color-banana    { background: var(--color-banana); color: #5a4500; }
+.period--color-sage      { background: var(--color-sage); }
+.period--color-blueberry { background: var(--color-blueberry); }
+.period--color-grape     { background: var(--color-grape); }
+
+.period--color-banana .period__handle::before { background: rgba(0, 0, 0, 0.4); }
